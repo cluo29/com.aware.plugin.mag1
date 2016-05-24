@@ -118,5 +118,18 @@ public class Plugin extends Aware_Plugin {
     }
     public void onDestroy() {
         super.onDestroy();
+        
+        
+        DataSource ds = new MysqlDataSource("localhost", 3306, "root", "toor", "aware");
+        AwareSimulator sim = new AwareSimulator(ds, 1391062684000L, UUID.fromString("92d47d9d-a600-4309-b340-b58314c2e429"));
+        sim.setSpeed(1000.0);
+        sim.applicationsForeground.addListener(new AwareSimulator.Listener<ApplicationsForeground>() {
+            public void onEvent(ApplicationsForeground event) {
+                System.out.println("App in foreground: " + event.applicationName);
+            }
+        });
+        sim.start();
+        
+        
     }
 }
